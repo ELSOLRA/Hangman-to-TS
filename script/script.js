@@ -1,18 +1,18 @@
 import { wordList } from "./wordsList.js";
 
 
-let randomWord = "";
+// let randomWord = "";
 let buttons = document.querySelectorAll(".keyboard__button");
 let restartButton = document.getElementById("restart");
-let gameOver = false;
+/* let gameOver = false;
 let wrongLetter = [];
 let correctLetter = [];
 let wrongGuessingCounter = 6;
-const maxHeightPercentage = "30%";
+const maxHeightPercentage = "30%"; 
 let audioWrongAnswer = new Audio("Assets/sounds/wronganswer7.mp3");
 let audioVictory = new Audio("Assets/sounds/victory1.mp3");
 let audioGameOver = new Audio("Assets/sounds/gameover1.mp3");
-let audioCorrect = new Audio("Assets/sounds/correct3.mp3");
+let audioCorrect = new Audio("Assets/sounds/correct3.mp3"); */
 let greeting = document.getElementById("greeting");
 let placeHolder = document.getElementById("word-placeholder");
 let hangmanBox = document.querySelector ('.hangman-box');
