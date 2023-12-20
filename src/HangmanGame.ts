@@ -1,12 +1,43 @@
 import { GameAudio, HangmanElements } from "./interfaces";
+// import { wordList } from './wordlist'
+const wordList = [
+    "Apple", "Banana", "Carrot", "Dog", "Elephant", "Frog", "Guitar", "Hat", "Cream", "Jellyfish",
+    "Kangaroo", "Lemon", "Monkey", "Penguin", "Queen", "Rainbow", "Sunflower", "Turtle", "Umbrella",
+    "Violin", "Watermelon", "Xylophone", "Yogurt", "Zebra",
+  ];
+
+  const buttons = document.querySelectorAll('.keyboard__button') as NodeListOf<HTMLButtonElement>;
+  const restartButton = document.getElementById('restart') as HTMLButtonElement;
+  const greeting = document.getElementById('greeting') as HTMLElement;
+  const placeHolder = document.getElementById('word-placeholder') as HTMLElement;
+  const hangmanBox = document.querySelector('.hangman-box') as HTMLElement;
 
 export class HangmanGame {
-  private randomWord: string[];
-  private gameOver: boolean;
-  private wrongLetter: string[];
-  private correctLetter: string[];
-  private wrongGuessingCounter: number;
-  private readonly maxHeightPercentage: string = "30%";
+    private randomWord: string[] = [];
+    private gameOver: boolean = false;
+    private wrongLetter: string[] = [];
+    private correctLetter: string[] = [];
+    private wrongGuessingCounter: number = 6;
+    private readonly maxHeightPercentage: string = "30%";
+
+    private audio: GameAudio = {
+        correct: new Audio("Assets/sounds/correct3.mp3"),
+        victory: new Audio("Assets/sounds/victory1.mp3"),
+        gameOver: new Audio("Assets/sounds/gameover1.mp3"),
+        wrongAnswer: new Audio("Assets/sounds/wronganswer7.mp3"),
+    };
+
+    private hangmanElements: HangmanElements = {
+        ground: document.getElementById('ground') as HTMLElement,
+        scaffold: document.getElementById('scaffold') as HTMLElement,
+        head: document.getElementById('head') as HTMLElement,
+        body: document.getElementById('body') as HTMLElement,
+        arms: document.getElementById('arms') as HTMLElement,
+        legs: document.getElementById('legs') as HTMLElement,
+        hearts: document.getElementById('hearts') as HTMLElement,
+    
+    };
+
 
   constructor(
     private wordList: string[],
@@ -15,15 +46,11 @@ export class HangmanGame {
     private greeting: HTMLElement,
     private placeHolder: HTMLElement,
     private hangmanBox: HTMLElement,
-    private audio: GameAudio,
-    private hangmanElements: HangmanElements
   ) {
-    this.randomWord = [];
-    this.gameOver = false;
-    this.wrongLetter = [];
-    this.correctLetter = [];
-    this.wrongGuessingCounter = 0;
-    this.resetGame();
+    this.initialize();
+  }
+
+  private initialize() {
     this.setRandomWord();
     this.showGreetingArea("Welcome, guess a letter to start the game ");
     this.updatePlaceholder();
@@ -31,18 +58,12 @@ export class HangmanGame {
   }
 
   private resetGame() {
-    // more control with reseting so then with window.location.reload()
-
-    this.randomWord = [];
-    this.gameOver = false;
-    this.wrongLetter = [];
-    this.correctLetter = [];
-    this.wrongGuessingCounter = 6;
+    window.location.reload();
   }
 
   private setRandomWord() {
-    this.randomWord = this.wordList[
-      Math.floor(Math.random() * this.wordList.length)
+    this.randomWord = wordList[
+      Math.floor(Math.random() * wordList.length)
     ]
       .toUpperCase()
       .split("");
@@ -178,3 +199,12 @@ export class HangmanGame {
     this.playAudio(this.audio.gameOver, 400);
   }
 }
+
+const hangmanGame = new HangmanGame(
+    wordList,
+    buttons,
+    restartButton,
+    greeting,
+    placeHolder,
+    hangmanBox
+);
