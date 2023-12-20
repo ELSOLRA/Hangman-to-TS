@@ -1,100 +1,39 @@
+import { wordList } from './wordlist'
+import { HangmanGame } from './HangmanGame';
+import { GameAudio, HangmanElements } from './interfaces';
 
-interface GameAudio {
-    correct: HTMLAudioElement;
-    victory: HTMLAudioElement;
-    gameOver: HTMLAudioElement;
-    wrongAnswer: HTMLAudioElement;
+const buttons = document.querySelectorAll('.keyboard__button') as NodeListOf<HTMLButtonElement>;
+const restartButton = document.getElementById('restart') as HTMLButtonElement;
+const greeting = document.getElementById('greeting') as HTMLElement;
+const placeHolder = document.getElementById('word-placeholder') as HTMLElement;
+const hangmanBox = document.querySelector('.hangman-box') as HTMLElement;
+const audio: GameAudio = {
+    correct: new Audio('Assets/sounds/correct3.mp3'),
+    victory: new Audio('Assets/sounds/victory1.mp3'),
+    gameOver: new Audio('Assets/sounds/gameover1.mp3'),
+    wrongAnswer: new Audio('Assets/sounds/wronganswer7.mp3'),
 };
 
-interface HangmanElements {
-    ground: HTMLElement;
-    scaffold: HTMLElement;
-    head: HTMLElement;
-    body: HTMLElement;
-    arms: HTMLElement;
-    legs: HTMLElement;
-    hearts: HTMLElement;
+const hangmanElements: HangmanElements = {
+    ground: document.getElementById('ground') as HTMLElement,
+    scaffold: document.getElementById('scaffold') as HTMLElement,
+    head: document.getElementById('head') as HTMLElement,
+    body: document.getElementById('body') as HTMLElement,
+    arms: document.getElementById('arms') as HTMLElement,
+    legs: document.getElementById('legs') as HTMLElement,
+    hearts: document.getElementById('hearts') as HTMLElement,
+
 };
+// Initializing HangmanGame
+const hangmanGame = new HangmanGame(
+    wordList,
+    buttons,
+    restartButton,
+    greeting,
+    placeHolder,
+    hangmanBox,
+    audio,
+    hangmanElements
+);
 
-class HangmanGame {
-    private randomWord: string[];
-    private gameOver: boolean;
-    private wrongLetter: string[];
-    private correctLetter: string[];
-    private wrongGuessingCounter: number;
-    private readonly maxHeightPercentage: string = "30%";
-
-    constructor(
-        private wordList: string[],
-        private buttons: NodeListOf<HTMLButtonElement>,
-        private restartButton: HTMLButtonElement,
-        private greeting: HTMLElement,
-        private placeHolder: HTMLElement,
-        private hangmanBox: HTMLElement,
-        private audio: GameAudio,
-        private hangmanElements: HangmanElements
-    ) {
-        this.resetGame();
-        this.setRandomWord();
-        this.showGreetingArea("Welcome, guess a letter to start the game ");
-        this.updatePlaceholder();
-        this.addEventListeners();
-      }
-
-      private resetGame() {     // more control with reseting so then with window.location.reload()
-
-        this.randomWord = [];
-        this.gameOver = false;
-        this.wrongLetter = [];
-        this.correctLetter = [];
-        this.wrongGuessingCounter = 6;
-      }
-
-      private setRandomWord() {
-        this.randomWord = this.wordList[
-          Math.floor(Math.random() * this.wordList.length)
-        ].toUpperCase().split("");
-      }
-
-      private showGreetingArea (str: string) {
-        this.greeting.style.display = "block";
-        this.greeting.innerHTML = str;
-      }
-
-      private updatePlaceholder() {
-        this.placeHolder.innerHTML = this.randomWord.map(letter => this.correctLetter.includes(letter) ? letter : "_").join("");
-      }
-    
-      private addEventListeners() {
-        this.restartButton.addEventListener("click", () => this.resetGame());
-        this.buttons.forEach((button) => {
-            button.addEventListener("click", () => {
-              if (!this.gameOver) {
-                this.handleGuess(button.innerHTML.toUpperCase());
-                button.disabled = true;
-              }
-            });
-          });
-
-      document.addEventListener("keydown", (event) => {
-        if (!this.gameOver) {
-          this.handleGuess(event.key.toUpperCase());
-        }
-      });
-    }
-    
-    private playAudio(audio: HTMLAudioElement, delay: number = 0) {
-        setTimeout(() => audio.play(), delay);
-      }
-    
-      private isWordGuessed() {
-        return this.randomWord.every((letter) =>
-          this.correctLetter.includes(letter)
-        );
-      }
-    
-      private handleGuess(guess: string) {
-        this.greeting.style.display = "none";
-    
-    
 
