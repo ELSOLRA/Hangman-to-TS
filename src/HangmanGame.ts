@@ -1,16 +1,7 @@
-import { GameAudio, HangmanElements } from "./interfaces";
-// import { wordList } from './wordlist'
-const wordList = [
-    "Apple", "Banana", "Carrot", "Dog", "Elephant", "Frog", "Guitar", "Hat", "Cream", "Jellyfish",
-    "Kangaroo", "Lemon", "Monkey", "Penguin", "Queen", "Rainbow", "Sunflower", "Turtle", "Umbrella",
-    "Violin", "Watermelon", "Xylophone", "Yogurt", "Zebra",
-  ];
+import { GameAudio, HangmanElements } from "./interfaces.js";
+import { wordList } from './wordlist.js'
 
-  const buttons = document.querySelectorAll('.keyboard__button') as NodeListOf<HTMLButtonElement>;
-  const restartButton = document.getElementById('restart') as HTMLButtonElement;
-  const greeting = document.getElementById('greeting') as HTMLElement;
-  const placeHolder = document.getElementById('word-placeholder') as HTMLElement;
-  const hangmanBox = document.querySelector('.hangman-box') as HTMLElement;
+
 
 export class HangmanGame {
     private randomWord: string[] = [];
@@ -200,11 +191,5 @@ export class HangmanGame {
   }
 }
 
-const hangmanGame = new HangmanGame(
-    wordList,
-    buttons,
-    restartButton,
-    greeting,
-    placeHolder,
-    hangmanBox
-);
+export { wordList };
+

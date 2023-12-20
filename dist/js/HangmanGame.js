@@ -1,13 +1,4 @@
-const wordList = [
-    "Apple", "Banana", "Carrot", "Dog", "Elephant", "Frog", "Guitar", "Hat", "Cream", "Jellyfish",
-    "Kangaroo", "Lemon", "Monkey", "Penguin", "Queen", "Rainbow", "Sunflower", "Turtle", "Umbrella",
-    "Violin", "Watermelon", "Xylophone", "Yogurt", "Zebra",
-];
-const buttons = document.querySelectorAll('.keyboard__button');
-const restartButton = document.getElementById('restart');
-const greeting = document.getElementById('greeting');
-const placeHolder = document.getElementById('word-placeholder');
-const hangmanBox = document.querySelector('.hangman-box');
+import { wordList } from './wordlist.js';
 export class HangmanGame {
     constructor(wordList, buttons, restartButton, greeting, placeHolder, hangmanBox) {
         this.wordList = wordList;
@@ -162,4 +153,4 @@ export class HangmanGame {
         this.playAudio(this.audio.gameOver, 400);
     }
 }
-const hangmanGame = new HangmanGame(wordList, buttons, restartButton, greeting, placeHolder, hangmanBox);
+export { wordList };
